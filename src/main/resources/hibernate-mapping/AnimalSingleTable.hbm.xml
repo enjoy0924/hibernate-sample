@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!--实体类继承关系ORM配置，所有的数据都存放在一张表里面-->
+<!--InheritanceType.SINGLE_TABLE 单表继承-->
+<hibernate-mapping>
+    <class name="com.allere.hibernate.entity.Animal" table="t_animal" lazy="false">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <!--因为是存储在同一张表里面，为了区分子类的类型，hibernate里面会增加一个字段来区分-->
+        <discriminator column="type" type="string"/>
+
+        <property name="name"/>
+        <property name="sex"/>
+
+        <!--subclass用来配置子类，discriminator-value用来配置子类的类型值，为常量-->
+        <subclass name="com.allere.hibernate.entity.Pig" discriminator-value="P">
+            <property name="weight"/>
+        </subclass>
+        <subclass name="com.allere.hibernate.entity.Bird" discriminator-value="B">
+            <property name="height"/>
+        </subclass>
+    </class>
+</hibernate-mapping>
+

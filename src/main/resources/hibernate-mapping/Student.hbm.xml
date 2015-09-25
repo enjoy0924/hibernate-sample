@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-7-15 17:25:36 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <!--
+        dynamic-update属性，true：表示修改了哪个字段就更新哪个字段，其它字段不更新，但要求是同一个session(不能跨session),
+        如果跨了session同样会更新所有的字段内容
+    -->
+    <class name="com.allere.hibernate.entity.Student" table="STUDENT" dynamic-update="true">
+
+        <!--id标签必须放在class标签内的第一个位置-->
+        <!--(1) name (可选): 标识属性的名字(实体类的属性)。
+            (2) type (可选): 标识Hibernate类型的名字(省略则使用hibernate默认类型)，也可以自己配置其它hibernate类型(integer, long, short, float,double, character, byte, boolean, yes_no, true_false)
+            (2) length(可选):当type为varchar时，设置字段长度
+            (3) column (可选 - 默认为属性名): 主键字段的名字(省略则取name为字段名)。
+            (4) unsaved-value (可选 - 默认为一个切合实际（sensible）的值): 一个特定的标识属性值，用来标志该实例是刚刚创建的，尚未保存。 这可以把这种实例和从以前的session中装载过（可能又做过修改-译者注） 但未再次持久化的实例区分开来。
+            (5) access (可选 - 默认为property): Hibernate用来访问属性值的策略。
+        -->
+        <id name="id" type="int" access="field">
+            <column name="ID" />
+            <generator class="identity" />  <!--generator的class属性指定ID的生成策略-->
+        </id>
+        <property name="age" type="int" access="field" update="true">    <!--update是否参与更新-->
+            <column name="AGE" />
+        </property>
+        <property name="name" type="java.lang.String" access="field">
+            <column name="NAME" />
+        </property>
+
+        <!--逻辑实体映射到数据库-->
+        <component name="contact">
+            <property name="email"/>
+            <property name="address"/>
+            <property name="zipCode"/>
+            <property name="tel"/>
+        </component>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <!--session-factory的name属性如果存在的话，就需要配置JNDI，原因不详... ...-->
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">123456</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- 调用getCurrentSession的时候必须配置，否则会抛出异常 -->
+        <!--
+             ①、thread：是从上下文找、只有当前没有Session时，才创建一个新的Session，主要从数据界定事务
+             ②、jta：主要从分布式界定事务，运行时需要Application Server来支持(Tomcat不支持)
+             ③、managed:不常用
+             ④、custom.Class:不常用
+        -->
+        <property name="current_session_context_class">thread</property>
+        
+        <!--控制台打印SQL执行语句的情况, format sql用来格式化SQL语句的输出-->
+
+        <property name="show_sql">false</property>
+        <property name="format_sql">false</property>
+
+        <!--使用映射文件，读取hibernate配置的ORM-->
+        <!--原始使用非注解的方式配置ORM，使用resource属性-->
+        <!--
+        <mapping resource="hibernate-mapping/Student.hbm.xml"/>
+        <mapping resource="hibernate-mapping/FiscalYearPeriod.hbm.xml"/>
+        <mapping resource="hibernate-mapping/AnimalSingleTable.hbm.xml"/>
+        -->
+
+        <!--使用@注解annotation的类不需要使用*.hbm.xml配置文件，使用class属性-->
+
+        <mapping class="com.allere.hibernate.entity.Teacher"/>
+        <!--
+        <mapping class="com.allere.hibernate.entity.IdCard"/>
+        <mapping class="com.allere.hibernate.entity.Person"/>
+        <mapping class="com.allere.hibernate.entity.Group"/>
+        <mapping class="com.allere.hibernate.entity.User"/>
+        <mapping class="com.allere.hibernate.entity.TreeNode"/>
+        <mapping class="com.allere.hibernate.entity.TagEntity"/>
+        <mapping class="com.allere.hibernate.entity.QuestionEntity"/>
+        -->
+        <!--<mapping class="com.allere.hibernate.paper.entity.AppraiseEntity"/>-->
+        <!--<mapping class="com.allere.hibernate.paper.entity.BookMarkEntity"/>-->
+        <!--<mapping class="com.allere.hibernate.paper.entity.QuestionAnswerEntity"/>-->
+        <!--<mapping class="com.allere.hibernate.paper.entity.StudentQuestionEntity"/>-->
+        <!--<mapping class="com.allere.hibernate.paper.entity.StudentScorePointEntity"/>-->
+        <!--<mapping class="com.allere.hibernate.paper.entity.TeacherDeliveredEntity"/>-->
+        <!--<mapping class="com.allere.hibernate.paper.entity.StudentPaperEntity"/>-->
+
+    </session-factory>
+</hibernate-configuration>

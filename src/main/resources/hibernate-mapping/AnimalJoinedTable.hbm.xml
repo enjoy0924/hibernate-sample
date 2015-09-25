@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!--不同子类的数据存放在不同的表结构里面，和数据都存储在一个表结构里面不一样，这里不需要使用<discriminator>标签来区分类型-->
+<!--InheritanceType.JOINED 具体表继承-->
+<hibernate-mapping>
+    <class name="com.allere.hibernate.entity.Animal" table="t_animal">
+        <id name="id" column="id"><!-- 映射主键 -->
+            <generator class="native"/>
+        </id>
+        <property name="name"/><!-- 映射普通属性 -->
+        <property name="sex"/>
+
+        <!--<joined-subclass>标签：继承映射　每个类映射成一个表 -->
+        <joined-subclass name="com.allere.hibernate.entity.Pig" table="t_pig">
+            <!-- <key>标签：会在相应的表（当前映射的表）里，加入一个外键 , 参照指向当前类的父类(当前Class标签对象的表(t_animal))-->
+            <key column="pigid"/>  <!--key[pigid]指向父类的key[id]-->
+            <property name="weight"/>
+        </joined-subclass>
+
+        <joined-subclass name="com.allere.hibernate.entity.Bird" table="t_bird">
+            <key column="birdid"/>
+            <property name="height"/>
+        </joined-subclass>
+    </class>
+</hibernate-mapping>

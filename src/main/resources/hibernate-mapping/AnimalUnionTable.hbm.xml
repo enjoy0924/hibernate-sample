@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!--不同子类的数据存放在不同的表结构里面，和数据都存储在一个表结构里面不一样，这里不需要使用<discriminator>标签来区分类型-->
+<!--InheritanceType.TABLE_PER_CLASS 具体表继承-->
+<hibernate-mapping>
+    <class name="com.allere.hibernate.entity.Animal" table="t_animal">
+        <id name="id" column="id"><!-- 映射主键 -->
+            <generator class="assigned"/><!-- 每个具体类映射一个表主键生成策略不可使用native -->
+        </id>
+        <property name="name"/><!-- 映射普通属性 -->
+        <property name="sex"/>
+
+        <!--使用<union-subclass>标签来映射"每个具体类映射成一张表"的映射关系
+            ，实现上上面的表t_animal虽然映射到数据库中，但它没有任何作用。      -->
+        <union-subclass name="com.allere.hibernate.entity.Pig" table="t_pig">
+            <property name="weight"/>
+        </union-subclass>
+        <union-subclass name="com.allere.hibernate.entity.Bird" table="t_bird">
+            <property name="height"/>
+        </union-subclass>
+
+    </class>
+</hibernate-mapping>
